@@ -2,17 +2,16 @@ package com.monglife.authorization.auth.controller;
 
 import com.monglife.authorization.auth.dto.req.LoginReqDto;
 import com.monglife.authorization.auth.dto.req.LogoutReqDto;
-import com.monglife.authorization.auth.dto.req.PassportAccountReqDto;
 import com.monglife.authorization.auth.dto.req.ReissueReqDto;
 import com.monglife.authorization.auth.dto.res.LoginResDto;
 import com.monglife.authorization.auth.dto.res.LogoutResDto;
-import com.monglife.authorization.auth.dto.res.PassportAccountResDto;
 import com.monglife.authorization.auth.dto.res.ReissueResDto;
+import com.monglife.authorization.auth.service.AuthorizationService;
 import com.monglife.authorization.auth.vo.LoginVo;
 import com.monglife.authorization.auth.vo.LogoutVo;
-import com.monglife.authorization.auth.vo.PassportAccountVo;
 import com.monglife.authorization.auth.vo.ReissueVo;
-import com.monglife.authorization.auth.service.AuthorizationService;
+import com.monglife.core.vo.passport.PassportDataAccountVo;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -58,12 +57,12 @@ public class AuthController {
                 .build());
     }
 
-    @PostMapping("/passport/account")
-    public ResponseEntity<PassportAccountResDto> passportAccount(@RequestBody @Validated PassportAccountReqDto passportAccountReqDto) {
+    @GetMapping("/passport/{accessToken}")
+    public ResponseEntity<PassportDataAccountVo> passport(@PathVariable("accessToken") @NotBlank String accessToken) {
 
-        PassportAccountVo passportAccountVo = authorizationService.passportAccount(passportAccountReqDto.accessToken());
+        PassportDataAccountVo passportAccountVo = authorizationService.findPassportDataAccount(accessToken);
 
-        return ResponseEntity.ok().body(PassportAccountResDto.builder()
+        return ResponseEntity.ok().body(PassportDataAccountVo.builder()
                 .id(passportAccountVo.id())
                 .deviceId(passportAccountVo.deviceId())
                 .email(passportAccountVo.email())
