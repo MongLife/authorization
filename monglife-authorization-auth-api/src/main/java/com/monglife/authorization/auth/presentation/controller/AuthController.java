@@ -1,15 +1,17 @@
-package com.monglife.authorization.auth.controller;
+package com.monglife.authorization.auth.presentation.controller;
 
-import com.monglife.authorization.auth.dto.req.LoginReqDto;
-import com.monglife.authorization.auth.dto.req.LogoutReqDto;
-import com.monglife.authorization.auth.dto.req.ReissueReqDto;
-import com.monglife.authorization.auth.dto.res.LoginResDto;
-import com.monglife.authorization.auth.dto.res.LogoutResDto;
-import com.monglife.authorization.auth.dto.res.ReissueResDto;
-import com.monglife.authorization.auth.service.AuthorizationService;
-import com.monglife.authorization.auth.vo.LoginVo;
-import com.monglife.authorization.auth.vo.LogoutVo;
-import com.monglife.authorization.auth.vo.ReissueVo;
+import com.monglife.authorization.auth.business.vo.ValidationAccessTokenVo;
+import com.monglife.authorization.auth.presentation.dto.req.LoginReqDto;
+import com.monglife.authorization.auth.presentation.dto.req.LogoutReqDto;
+import com.monglife.authorization.auth.presentation.dto.req.ReissueReqDto;
+import com.monglife.authorization.auth.presentation.dto.res.LoginResDto;
+import com.monglife.authorization.auth.presentation.dto.res.LogoutResDto;
+import com.monglife.authorization.auth.presentation.dto.res.ReissueResDto;
+import com.monglife.authorization.auth.business.service.AuthService;
+import com.monglife.authorization.auth.business.vo.LoginVo;
+import com.monglife.authorization.auth.business.vo.LogoutVo;
+import com.monglife.authorization.auth.business.vo.ReissueVo;
+import com.monglife.authorization.auth.presentation.dto.res.ValidationAccessTokenResDto;
 import com.monglife.core.vo.passport.PassportDataAccountVo;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +24,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthorizationService authorizationService;
+    private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResDto> login(@RequestBody @Validated LoginReqDto loginReqDto) {
 
-        LoginVo loginVo = authorizationService.login(loginReqDto.deviceId(), loginReqDto.email(), loginReqDto.name());
+        LoginVo loginVo = authService.login(loginReqDto.deviceId(), loginReqDto.email(), loginReqDto.name());
 
         return ResponseEntity.ok().body(LoginResDto.builder()
                 .accountId(loginVo.accountId())
@@ -39,7 +41,7 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<LogoutResDto> logout(@RequestBody @Validated LogoutReqDto logoutReqDto) {
 
-        LogoutVo logoutVo = authorizationService.logout(logoutReqDto.refreshToken());
+        LogoutVo logoutVo = authService.logout(logoutReqDto.refreshToken());
 
         return ResponseEntity.ok().body(LogoutResDto.builder()
                 .accountId(logoutVo.accountId())
@@ -49,7 +51,7 @@ public class AuthController {
     @PostMapping("/reissue")
     public ResponseEntity<ReissueResDto> reissue(@RequestBody @Validated ReissueReqDto reissueReqDto) {
 
-        ReissueVo reissueVo = authorizationService.reissue(reissueReqDto.refreshToken());
+        ReissueVo reissueVo = authService.reissue(reissueReqDto.refreshToken());
 
         return ResponseEntity.ok().body(ReissueResDto.builder()
                 .accessToken(reissueVo.accessToken())
@@ -57,10 +59,20 @@ public class AuthController {
                 .build());
     }
 
-    @GetMapping("/passport/{accessToken}")
+    @GetMapping("/internal/validation/{accessToken}")
+    public ResponseEntity<ValidationAccessTokenResDto> validationAccessToken(@PathVariable("accessToken") @NotBlank String accessToken) {
+
+        ValidationAccessTokenVo validationAccessTokenVo = authService.validationAccessToken(accessToken);
+
+        return ResponseEntity.ok().body(ValidationAccessTokenResDto.builder()
+                .accessToken(validationAccessTokenVo.accessToken())
+                .build());
+    }
+
+    @GetMapping("/internal/passport/{accessToken}")
     public ResponseEntity<PassportDataAccountVo> passport(@PathVariable("accessToken") @NotBlank String accessToken) {
 
-        PassportDataAccountVo passportAccountVo = authorizationService.findPassportDataAccount(accessToken);
+        PassportDataAccountVo passportAccountVo = authService.findPassportDataAccount(accessToken);
 
         return ResponseEntity.ok().body(PassportDataAccountVo.builder()
                 .id(passportAccountVo.id())

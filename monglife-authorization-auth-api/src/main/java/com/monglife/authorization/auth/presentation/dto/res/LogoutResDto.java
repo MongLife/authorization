@@ -1,4 +1,4 @@
-package com.monglife.authorization.auth.dto.res;
+package com.monglife.authorization.auth.presentation.dto.res;
 
 import lombok.Builder;
 

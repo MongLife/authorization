@@ -1,9 +1,9 @@
-package com.monglife.authorization.auth.dto.req;
+package com.monglife.authorization.auth.presentation.dto.req;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
-public record ReissueReqDto(
+public record LogoutReqDto(
         @NotEmpty
         @NotBlank
         String refreshToken

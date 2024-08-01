@@ -1,6 +1,6 @@
-package com.monglife.authorization.auth.advice;
+package com.monglife.authorization.auth.presentation.controllerAdvice;
 
-import com.monglife.authorization.auth.controller.AuthController;
+import com.monglife.authorization.auth.presentation.controller.AuthController;
 import com.monglife.core.dto.res.ErrorResDto;
 import com.monglife.core.code.ErrorCode;
 import com.monglife.core.code.GlobalErrorCode;

@@ -1,4 +1,4 @@
-package com.monglife.authorization.auth.vo;
+package com.monglife.authorization.auth.business.vo;
 
 import lombok.Builder;
 
