@@ -1,4 +1,4 @@
-package com.monglife.authorization.auth.error;
+package com.monglife.authorization.auth.global.errorCode;
 
 import com.monglife.core.code.ErrorCode;
 import lombok.AllArgsConstructor;

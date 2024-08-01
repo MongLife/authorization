@@ -1,9 +1,9 @@
-package com.monglife.authorization.auth.vo;
+package com.monglife.authorization.auth.presentation.dto.res;
 
 import lombok.Builder;
 
 @Builder
-public record ReissueVo(
+public record ReissueResDto(
         String accessToken,
         String refreshToken
 ) {
