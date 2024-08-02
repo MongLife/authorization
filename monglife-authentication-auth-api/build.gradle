@@ -46,7 +46,7 @@ tasks.named('test') {
 
 tasks.register('copyPrivate', Copy) {
     copy {
-        from '../config/monglife-authorization-auth-api/'
+        from '../config/monglife-authentication-auth-api/'
         include 'application*.yml'
         into 'src/main/resources'
     }
