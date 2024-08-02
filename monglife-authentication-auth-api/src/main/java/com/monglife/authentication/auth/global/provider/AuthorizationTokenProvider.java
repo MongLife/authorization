@@ -9,9 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 
@@ -47,16 +44,6 @@ public class AuthorizationTokenProvider {
     public String generateRefreshToken() {
         Claims claims = Jwts.claims();
         return jwtTokenUtil.generateToken(claims, REFRESH_TOKEN_EXPIRED);
-    }
-    public Optional<Long> getExpiredSeconds(String token) {
-        if (isTokenExpired(token)) {
-            return Optional.empty();
-        }
-        LocalDateTime expiration = jwtTokenUtil.extractAllClaims(token).getExpiration().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        long expired = Duration.between(LocalDateTime.now(), expiration).getSeconds();
-        return Optional.of(Math.max(0, expired));
     }
     public Optional<Long> getMemberId(String token) {
         if (isTokenExpired(token)) {

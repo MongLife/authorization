@@ -33,8 +33,7 @@ public class AccountLog extends BaseTimeEntity {
     @Builder.Default
     private Integer loginCount = 0;
 
-    public AccountLog increaseLoginCount() {
+    public void increaseLoginCount() {
         this.loginCount++;
-        return this;
     }
 }

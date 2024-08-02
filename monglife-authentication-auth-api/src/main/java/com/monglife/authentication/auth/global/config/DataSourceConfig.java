@@ -22,8 +22,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories(
         basePackages = "com.monglife.authentication.auth.data.repository",
-        entityManagerFactoryRef = "entityManager",
-        transactionManagerRef = "transactionManager"
+        entityManagerFactoryRef = "entityManager"
 )
 public class DataSourceConfig {
 
