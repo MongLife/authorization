@@ -4,4 +4,4 @@
 	branch = develop
 [submodule "config"]
 	path = config
-	url = https://github.com/MongLife/monglife-authorization-sub.git
+	url = https://github.com/MongLife/monglife-authentication-sub.git
