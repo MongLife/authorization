@@ -1,4 +1,5 @@
 rootProject.name = 'monglife-authentication'
 
-include 'monglife-core'
-include 'monglife-authentication-auth-api'
+include 'core'
+include 'apps'
+include 'apps:monglife-authentication-auth-api'
