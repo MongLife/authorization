@@ -155,7 +155,7 @@ public class AuthService {
                 .orElseThrow(() -> new ExpiredException(AuthErrorCode.ACCESS_TOKEN_EXPIRED));
 
         Account account = accountRepository.findByAccountId(accountId)
-                .orElseThrow();
+                .orElseThrow(() -> new NotFoundException(AuthErrorCode.PASSPORT_GENERATE_FAIL));
 
         return PassportDataAccountVo.builder()
                 .accountId(accountId)

@@ -1,7 +1,7 @@
-[submodule "monglife-core"]
-	path = monglife-core
+[submodule "core"]
+	path = core
 	url = https://github.com/MongLife/monglife-core.git
 	branch = develop
-[submodule "config"]
-	path = config
-	url = https://github.com/MongLife/monglife-authentication-sub.git
+[submodule "configs"]
+	path = configs
+	url = https://github.com/MongLife/monglife-authorization-sub.git

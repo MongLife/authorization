@@ -1,10 +1,6 @@
 
-apply plugin: 'java-library'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
 dependencies {
-    implementation project(':monglife-core')
+    implementation project(':core')
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -32,21 +28,9 @@ dependencies {
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 }
 
-tasks.named('bootJar') {
-    enabled = true
-}
-
-tasks.named('jar') {
-    enabled = false
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
 tasks.register('copyPrivate', Copy) {
     copy {
-        from '../config/monglife-authentication-auth-api/'
+        from '../../config/monglife-authentication-auth-api/'
         include 'application*.yml'
         into 'src/main/resources'
     }
